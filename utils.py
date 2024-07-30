@@ -16,6 +16,10 @@ def load_data():
 # load data
 sentiment_df = load_data()
 
+# load data for tokenize
+df_train = pd.read_csv('./data/train/X_train.csv')
+train_set = df_train['sentiment'].tolist()
+
 
 def stream_text(sentence):
     for word in sentence.split(' '):
@@ -23,9 +27,9 @@ def stream_text(sentence):
         time.sleep(0.05)
 
 
-def prediction_summary(prediction, labels_encoder):
+def prediction_summary(prediction, encoded_labels):
     pred_idx = np.argmax(prediction)
-    pred_label = labels_encoder[pred_idx]
+    pred_label = encoded_labels[pred_idx]
     return {
         'prob': {
             'positive': prediction[0],
@@ -43,14 +47,20 @@ def load_random_data():
 
 
 def labels_encoder():
-    y_train = sentiment_df['label']
+    df_labels = pd.read_csv('./data/train/y_train.csv')
+    # convert dataframe to list for tokenize
+    labels = df_labels['label'].tolist()
+    # tokenize the label
     label_tokenizer = Tokenizer()
-    label_tokenizer.fit_on_texts(y_train)
+    # fit tokenizer to labels
+    label_tokenizer.fit_on_texts(labels)
+    # create label-index dictionary
     label_index_word = label_tokenizer.index_word
     # start encoder label from 0
-    labels_encoder = {key - 1: value for key,
+    encoded_labels = {key - 1: value for key,
                       value in label_index_word.items()}
-    return labels_encoder
+    print(f'labels encoded: {encoded_labels}')
+    return encoded_labels
 
 
 def predict_model(sentence):
@@ -60,13 +70,9 @@ def predict_model(sentence):
     # Maximum length of the padded sequences
     max_length = 50
 
-    # load data for tokenize
-    df_train = pd.read_csv('./data/X_train.csv')
-    X_train = df_train['sentiment'].tolist()
-
     # tokenize
     tokenizer = Tokenizer(num_words=vocab_size, oov_token='<OOV>')
-    tokenizer.fit_on_texts(X_train)
+    tokenizer.fit_on_texts(train_set)
 
     # load model
     loaded_model = load_model('./model/model.h5')
