@@ -12,7 +12,8 @@ def show_result(summary):
 
 random_sentence = load_random_data()
 st.title('Check the sentence sentiment')
-st.caption("🚀 This project checks sentiment categories from your input sentences")
+st.caption(
+    "🚀 This project checks sentiment categories from your input sentences")
 input_sentence = st.text_area('Your sentence')
 
 if input_sentence:

@@ -3,13 +3,13 @@ import time
 import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import pandas as pd
 import streamlit as st
 
 
 def load_data():
-    data = pd.read_csv('../data/sentiment_data.csv')
+    data = pd.read_csv('./data/sentiment_data.csv')
     return data
 
 
@@ -17,7 +17,7 @@ def load_data():
 sentiment_df = load_data()
 
 # load data for tokenize
-df_train = pd.read_csv('../data/train/X_train.csv')
+df_train = pd.read_csv('./data/train/X_train.csv')
 train_set = df_train['sentiment'].tolist()
 
 
@@ -47,7 +47,7 @@ def load_random_data():
 
 
 def labels_encoder():
-    df_labels = pd.read_csv('../data/train/y_train.csv')
+    df_labels = pd.read_csv('./data/train/y_train.csv')
     # convert dataframe to list for tokenize
     labels = df_labels['label'].tolist()
     # tokenize the label
@@ -75,7 +75,7 @@ def predict_model(sentence):
     tokenizer.fit_on_texts(train_set)
 
     # load model
-    loaded_model = load_model('../model/checkpoint-06-0.873-0.823.keras')
+    loaded_model = load_model('./model/checkpoint-06-0.873-0.823.keras')
 
     # input for prediction
     input_sequences = tokenizer.texts_to_sequences([sentence])
