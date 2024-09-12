@@ -1,6 +1,5 @@
 import streamlit as st
 from utils import *
-from streamlit_extras.metric_cards import style_metric_cards
 
 
 def show_result(summary):
