@@ -32,11 +32,11 @@ def prediction_summary(prediction, encoded_labels):
     pred_label = encoded_labels[pred_idx]
     return {
         'prob': {
-            'positive': prediction[0],
-            'neutral': prediction[1],
-            'negative': prediction[2]
+            'Positive': prediction[0],
+            'Neutral': prediction[1],
+            'Negative': prediction[2]
         },
-        'label': pred_label
+        'label': pred_label.title()
     }
 
 

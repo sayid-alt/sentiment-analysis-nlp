@@ -1,29 +1,74 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 from utils import *
+from streamlit_extras.metric_cards import style_metric_cards
 
 
 def show_result(summary):
-    prob, label = summary.values()
-    st.write('Sentiment prediction:', label)
-    st.bar_chart(prob)
+    probs, label = summary.values()
+
+    # assign the prob of result
+    prob = probs[label] * 1
+    print(prob)
+    st.divider()
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric(label='Sentiment Prediction',
+                  value=label)
+    with col2:
+        st.metric(label='Prediciton Prob:', value=f'{round(prob,4)}')
+
+    # style_metric_cards(
+    #     border_color=None,
+    #     border_left_color="#FFA500",
+    # )
+
+    st.bar_chart(probs, color="#FFA500")
 
 
-random_sentence = load_random_data()
-st.title('Check the sentence sentiment')
-st.caption(
-    "🚀 This project checks sentiment categories from your input sentences")
-input_sentence = st.text_area('Your sentence')
+def sidebar():
+    with st.sidebar:
+        st.header(
+            'Get the experience sentiment analysis firsthand here!')
+        st.image('./images/qr-code.png', caption='Scan me!')
 
-if input_sentence:
-    st.write_stream(stream_text(input_sentence))
-    with st.spinner('Predict...'):
-        summary = predict_model(input_sentence)
-    show_result(summary)
 
-if st.button("Random Sentence"):
-    st.write_stream(stream_text(random_sentence))
-    with st.spinner('Predict...'):
-        summary = predict_model(input_sentence)
-    show_result(summary)
+def main():
+    sidebar()
+
+    # logo
+    st.image('images/banner.png')
+    st.title('What\'s on your mind?')
+    st.caption(
+        "🚀 This project will classify the sentiment of your input into predefined categories: positive, neutral, or negative.")
+
+    # user input
+    input_sentence = st.text_area('Your sentence')
+
+    # condition if user input the sentence
+    if input_sentence:
+        # UI run the inputed text streamly
+
+        st.write_stream(stream_text(input_sentence))
+        # run prediction
+        with st.spinner('Predict...'):
+            summary = predict_model(input_sentence)
+        show_result(summary)
+
+    # condition if user choose to generate random sentence
+    if st.button("Random Sentence"):
+        # generate random sentence
+        random_sentence = load_random_data()
+
+        # write the random sentence streamly
+        st.write_stream(stream_text(random_sentence))
+
+        # Run prediction
+        with st.spinner('Predict...'):
+            summary = predict_model(input_sentence)
+
+        # function to show the result of predicition
+        show_result(summary)
+
+
+if __name__ == "__main__":
+    main()
