@@ -29,6 +29,8 @@ def sidebar():
         st.header(
             'Get the experience sentiment analysis firsthand here!')
         st.image('./images/qr-code.png', caption='Scan me!')
+        st.link_button("Word embedding", "https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/sayid-alt/sentiment-analysis-nlp/main/model/embedding_word/projector_config.json")
+
 
 
 def main():
