@@ -32,7 +32,6 @@ def sidebar():
         st.link_button("Word embedding", "https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/sayid-alt/sentiment-analysis-nlp/main/model/embedding_word/projector_config.json")
 
 
-
 def main():
     sidebar()
 
