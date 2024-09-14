@@ -75,7 +75,7 @@ def predict_model(sentence):
     tokenizer.fit_on_texts(train_set)
 
     # load model
-    loaded_model = load_model('./model/checkpoint-06-0.873-0.823.keras')
+    loaded_model = load_model('./model/checkpoint-10-0.869-0.825.keras')
 
     # input for prediction
     input_sequences = tokenizer.texts_to_sequences([sentence])
