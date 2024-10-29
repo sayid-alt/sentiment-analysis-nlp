@@ -4,7 +4,7 @@ https://github.com/sayid-alt/sentiment-analysis-nlp
 
 ---
 
-# Sentiment Analysis NLP App
+# Deep Learning for Sentiment Analysis NLP App
 
 This is a Streamlit application for sentiment analysis of user feedback, criticism, and suggestions. The app automatically detects negative, neutral, or positive sentiments based on input data.
 
